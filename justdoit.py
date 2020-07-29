@@ -5,6 +5,9 @@ def xuexi():
     studyed = []
     with open("words.txt") as file_:
         words = file_.readlines()
+        with open("words_backup.txt","w") as file_backup:
+            for i in words:
+                file_backup.write(i)
         words = [i.strip() for i in words]
         words_new = [i for i in words if len(i.split("\t"))==2]
         words_old = [i for i in words if len(i.split("\t"))==4]
@@ -34,23 +37,23 @@ def xuexi():
     studyed += words_dead
     if (len(studyed) != len(words)):
         print("wrong: words="+str(len(words))+" studyed="+str(len(studyed)))
-    else:
-        with open(words.txt) as file_:
-            for i in studyed:
-                file_.write(i+"\n")
+    with open("words.txt","w") as file_:
+        for i in studyed:
+            file_.write(i+"\n")
+    print("updated!")
     print("today task complete!")
 def xuexi_new(words_new,pre_new_num):
     nw_words_new = []
     pre_words = words_new[:pre_new_num]
     for i in pre_words:
-        print(i)
-        time.sleep(5)
+        show(i)
+        time.sleep(3)
         os.system('cls' if os.name == 'nt' else 'clear')
     for i in pre_words:
-        print(i)
+        show(i)
         date_string = str(datetime.date.today().year)+"-"+str(datetime.date.today().month)+"-"+str(datetime.date.today().day)
         nw_words_new.append(i+"\t"+date_string+"\t"+"1")
-        time.sleep(5)
+        time.sleep(3)
         os.system('cls' if os.name == 'nt' else 'clear')
     if len(words_new) > 200:
         return nw_words_new + words_new[200:]
@@ -81,20 +84,28 @@ def xuexi_old(words_old):
     for i in words_old:
         dt = i.split("\t")[2]
         dl_days = int(i.split("\t")[3])
-        delta_days = time_interval(time_str)
+        delta_days = time_interval(dt)
         if delta_days > dl_days:
             print("\t".join(i.split("\t")[:2])+"sup")
             date_string = str(datetime.date.today().year)+"-"+str(datetime.date.today().month)+"-"+str(datetime.date.today().day)
             nw_words_old.append("\t".join(i.split("\t")[:3])+"\t" + date_string + "\t" + "1")
         if delta_days == dl_days:
-            print(i)
+            show(i)
             x = "\t".join(i.split("\t")[:-1]) + "\t" + str(interval_change(dl_days))
             nw_words_old.append(x)
         if delta_days < dl_days:
             nw_words_old.append(i)
-        time.sleep(5)
+        time.sleep(3)
         os.system('cls' if os.name == 'nt' else 'clear')
     return nw_words_old
+
+def show(word_min):
+    word_min = word_min.split("\t")
+    word = word_min[0]
+    mining = word_min[1]
+    print(word)
+    time.sleep(2)
+    print(mining)
 
 def interval_change(n):
     if n==1:
