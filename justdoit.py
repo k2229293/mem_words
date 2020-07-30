@@ -21,13 +21,13 @@ def xuexi():
         n = 0
         for i in words_strange:
             n+=1
-            print(i)
-        print("strange_word:"+str(len(words_strange)))
+            print("strange_word:"+str(i)+",line:" + str(words.index(i)))
     print("not study:"+ str(words_new_num))
     pre_new_num = 200 if (words_new_num > 200) else words_new_num
     pre_old_num = daoqi(words_old)
     pre_num = pre_new_num*2 + pre_old_num
     pre_min = pre_num*5/60
+    print("old worlds:"+str(pre_old_num))
     print("prepare study words:" + str(pre_num))
     print("prepate study time:" + str(pre_min)+"mins")
     time.sleep(10)
@@ -46,11 +46,11 @@ def xuexi_new(words_new,pre_new_num):
     nw_words_new = []
     pre_words = words_new[:pre_new_num]
     for i in pre_words:
-        show(i)
+        show(i,"forward")
         time.sleep(3)
         os.system('cls' if os.name == 'nt' else 'clear')
     for i in pre_words:
-        show(i)
+        show(i,"reward")
         date_string = str(datetime.date.today().year)+"-"+str(datetime.date.today().month)+"-"+str(datetime.date.today().day)
         nw_words_new.append(i+"\t"+date_string+"\t"+"1")
         time.sleep(3)
@@ -66,7 +66,7 @@ def time_interval(time_str):
     m = int(date_lst[1])
     d = int(date_lst[2])
     dt = datetime.date(y,m,d)
-    delta_days = (dt - datetime.date.today()).days
+    delta_days = (datetime.date.today()-dt).days
     return delta_days
 
 def daoqi(words_old):
@@ -90,7 +90,7 @@ def xuexi_old(words_old):
             date_string = str(datetime.date.today().year)+"-"+str(datetime.date.today().month)+"-"+str(datetime.date.today().day)
             nw_words_old.append("\t".join(i.split("\t")[:3])+"\t" + date_string + "\t" + "1")
         if delta_days == dl_days:
-            show(i)
+            show(i,"forward")
             x = "\t".join(i.split("\t")[:-1]) + "\t" + str(interval_change(dl_days))
             nw_words_old.append(x)
         if delta_days < dl_days:
@@ -99,13 +99,18 @@ def xuexi_old(words_old):
         os.system('cls' if os.name == 'nt' else 'clear')
     return nw_words_old
 
-def show(word_min):
+def show(word_min,ward):
     word_min = word_min.split("\t")
     word = word_min[0]
     mining = word_min[1]
-    print(word)
-    time.sleep(2)
-    print(mining)
+    if ward == "forward":
+        print(word)
+        time.sleep(2)
+        print(mining)
+    elif ward == "reward":
+        print(mining)
+        time.sleep(2)
+        print(word)
 
 def interval_change(n):
     if n==1:
