@@ -90,7 +90,7 @@ def xuexi_old(words_old):
             date_string = str(datetime.date.today().year)+"-"+str(datetime.date.today().month)+"-"+str(datetime.date.today().day)
             nw_words_old.append("\t".join(i.split("\t")[:3])+"\t" + date_string + "\t" + "1")
         if delta_days == dl_days:
-            show(i,"forward")
+            show(i,"reward")
             x = "\t".join(i.split("\t")[:-1]) + "\t" + str(interval_change(dl_days))
             nw_words_old.append(x)
         if delta_days < dl_days:
